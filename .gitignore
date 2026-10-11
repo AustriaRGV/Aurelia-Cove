@@ -1,0 +1,13 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# local agent skills (remove this line to share them)
+.opencode/
+
+# logs & OS
+*.log
+.DS_Store
+Thumbs.db
