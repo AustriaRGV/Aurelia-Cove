@@ -1,5 +1,5 @@
-export const SERVICE_RATE = 0.12; // 12% service charge
-export const CLEANING_FEE = 45; // flat fee in USD
+const SERVICE_RATE = 0.12; // 12% service charge
+const CLEANING_FEE = 45; // flat fee in USD
 
 export function nightsBetween(checkIn: string, checkOut: string): number {
   if (!checkIn || !checkOut) return 0;

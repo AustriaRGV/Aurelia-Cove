@@ -13,14 +13,10 @@ export default function Navbar() {
       nav.classList.toggle('scrolled', window.scrollY > 40);
     };
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const nav = document.getElementById('site-nav');
     nav?.classList.remove('scrolled');
     document.querySelector('.nav-links')?.classList.remove('open');
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, [location.pathname]);
 
   const toggle = () => document.querySelector('.nav-links')?.classList.toggle('open');

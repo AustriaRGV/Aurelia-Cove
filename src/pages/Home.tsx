@@ -32,8 +32,8 @@ export default function Home() {
       <section className="hero" aria-label="Welcome to Aurelia Cove">
         <div className="hero-media">
           <img
-            src="https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=2200&auto=format&fit=crop"
-            alt="Infinity pool at Aurelia Cove blending into the turquoise bay at golden hour"
+            src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=2200&auto=format&fit=crop"
+            alt="Tropical resort pool lined with palms and sun loungers at Aurelia Cove"
           />
           <div className="hero-shade" aria-hidden="true" />
         </div>
