@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { formatUSD, type Accommodation } from '../data/resort';
+import { formatPHP, type Accommodation } from '../data/resort';
 
 export default function RoomCard({ room }: { room: Accommodation }) {
   return (
     <article className="room-card">
       <div className="room-media">
         <img src={room.images[0].src} alt={room.images[0].alt} loading="lazy" />
-        <span className="room-price-tag"><strong>{formatUSD(room.rate)}</strong> / night</span>
+        <span className="room-price-tag"><strong>{formatPHP(room.rate)}</strong> / night</span>
       </div>
       <div className="room-body">
         <h3>{room.name}</h3>
@@ -18,7 +18,7 @@ export default function RoomCard({ room }: { room: Accommodation }) {
         <p className="room-desc">{room.description}</p>
         <div className="room-actions">
           <Link className="btn btn-outline-dark btn-sm" to={`/stay/${room.slug}`}>View details</Link>
-          <Link className="btn btn-primary btn-sm" to={`/booking?room=${room.slug}`}>Book now</Link>
+          <Link className="btn btn-primary btn-sm" to={`/booking?room=${room.slug}`}>Reserve Now</Link>
         </div>
       </div>
     </article>

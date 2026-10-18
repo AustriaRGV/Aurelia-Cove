@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { CONTACT } from '../data/resort';
+import { CONTACT, DIRECTIONS } from '../data/resort';
 import { isEmail } from '../lib/booking';
+import AmenityIcon from '../components/AmenityIcon';
+import MapIllustration from '../components/MapIllustration';
 
 export default function Contact() {
   const [name, setName] = useState('');
@@ -28,30 +30,45 @@ export default function Contact() {
         <div className="container">
           <p className="eyebrow" style={{ color: '#e9dfc9' }}>Contact</p>
           <h1>Write to the bay</h1>
-          <p>Questions about stays, celebrations or the island? Our hosts reply within one business day.</p>
+          <p>Questions about stays, cottages, day tours or celebrations? Our hosts reply within one business day.</p>
         </div>
       </section>
       <section className="section" style={{ paddingTop: '3rem' }}>
         <div className="container">
           <div className="contact-grid">
             <div className="contact-info">
-              <div className="info-block">
-                <h3>Reservations</h3>
-                <p>{CONTACT.phone}<br />{CONTACT.hours}</p>
-                <p><a href={`mailto:${CONTACT.reservations}`}>{CONTACT.reservations}</a></p>
-              </div>
-              <div className="info-block">
-                <h3>Visit</h3>
-                <p>{CONTACT.addressLines.join(', ')}.</p>
-              </div>
-              <div className="info-block">
-                <h3>Follow along</h3>
-                <p>Find us on social for news from the bay.</p>
-                <div className="social-row">
-                  <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">Instagram</a>
-                  <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">Facebook</a>
-                  <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">YouTube</a>
+              <div className="info-card">
+                <span className="info-card-icon"><AmenityIcon name="pin" /></span>
+                <div>
+                  <h3>Address</h3>
+                  <p>{CONTACT.addressLines.join(', ')}</p>
                 </div>
+              </div>
+              <div className="info-card">
+                <span className="info-card-icon"><AmenityIcon name="phone" /></span>
+                <div>
+                  <h3>Reservations</h3>
+                  <p><a href={`tel:${CONTACT.phone.replace(/[^+\d]/g, '')}`}>{CONTACT.phone}</a></p>
+                  <p className="info-card-meta">{CONTACT.frontDesk}</p>
+                </div>
+              </div>
+              <div className="info-card">
+                <span className="info-card-icon"><AmenityIcon name="mail" /></span>
+                <div>
+                  <h3>Email</h3>
+                  <p><a href={`mailto:${CONTACT.reservations}`}>{CONTACT.reservations}</a></p>
+                </div>
+              </div>
+              <div className="info-card info-card-map">
+                <span className="info-card-icon"><AmenityIcon name="map" /></span>
+                <div>
+                  <h3>Location</h3>
+                  <p>Find us on the map.</p>
+                </div>
+                <div className="map-frame">
+                  <MapIllustration slice />
+                </div>
+                <a className="btn btn-outline-dark btn-sm" href={CONTACT.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
               </div>
             </div>
             <div className="panel-card" style={{ marginTop: 0 }}>
@@ -78,6 +95,8 @@ export default function Contact() {
                         <label className="f-label" htmlFor="c-topic">Topic</label>
                         <select className="f-input" id="c-topic" value={topic} onChange={(e) => setTopic(e.target.value)}>
                           <option>A stay</option>
+                          <option>Cottage or day pass</option>
+                          <option>Day tour</option>
                           <option>Honeymoon</option>
                           <option>Family gathering</option>
                           <option>Spa &amp; experiences</option>
@@ -94,6 +113,21 @@ export default function Contact() {
                   </div>
                 </form>
               )}
+            </div>
+          </div>
+
+          <div className="directions" style={{ marginTop: '3.5rem' }} aria-labelledby="c-dir-h">
+            <h3 id="c-dir-h">Getting here</h3>
+            <div className="directions-grid">
+              {DIRECTIONS.map((d) => (
+                <div className="directions-item" key={d.title}>
+                  <AmenityIcon name={d.icon} />
+                  <div>
+                    <h4>{d.title}<span className="directions-meta">{d.meta}</span></h4>
+                    <p>{d.text}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

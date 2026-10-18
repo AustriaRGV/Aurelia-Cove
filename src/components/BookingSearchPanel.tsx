@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ACCOMMODATIONS } from '../data/resort';
+import { ACCOMMODATIONS, COTTAGES } from '../data/resort';
 import { addDaysISO, todayISO } from '../lib/booking';
 
 export default function BookingSearchPanel() {
@@ -8,7 +8,7 @@ export default function BookingSearchPanel() {
   const [checkIn, setCheckIn] = useState(todayISO());
   const [checkOut, setCheckOut] = useState(addDaysISO(todayISO(), 3));
   const [guests, setGuests] = useState('2');
-  const [room, setRoom] = useState('any');
+  const [pick, setPick] = useState('any');
   const [error, setError] = useState('');
 
   const submit = (e: React.FormEvent) => {
@@ -16,12 +16,18 @@ export default function BookingSearchPanel() {
     if (!checkIn || !checkOut) { setError('Please choose both dates.'); return; }
     if (checkOut <= checkIn) { setError('Check-out must be after check-in.'); return; }
     setError('');
-    const q = new URLSearchParams({ checkIn, checkOut, guests, ...(room !== 'any' ? { room } : {}) });
+    const q = new URLSearchParams({
+      trip: 'overnight',
+      checkIn,
+      checkOut,
+      guests,
+      ...(pick !== 'any' ? { pick } : {}),
+    });
     navigate(`/booking?${q.toString()}`);
   };
 
   return (
-    <form className="booking-panel" onSubmit={submit} aria-label="Search availability">
+    <form className="booking-panel" id="availability" onSubmit={submit} aria-label="Check availability" style={{ scrollMarginTop: '6rem' }}>
       <div className="booking-field">
         <label htmlFor="bp-in">Check-in</label>
         <input id="bp-in" type="date" value={checkIn} min={todayISO()} onChange={(e) => setCheckIn(e.target.value)} required />
@@ -33,23 +39,25 @@ export default function BookingSearchPanel() {
       <div className="booking-field">
         <label htmlFor="bp-guests">Guests</label>
         <select id="bp-guests" value={guests} onChange={(e) => setGuests(e.target.value)}>
-          <option value="1">1 guest</option>
-          <option value="2">2 guests</option>
-          <option value="3">3 guests</option>
-          <option value="4">4 guests</option>
-          <option value="5">5 guests</option>
-          <option value="6">6 guests</option>
+          {['1', '2', '3', '4', '5', '6', '8', '10'].map((n) => (
+            <option key={n} value={n}>{n} {n === '1' ? 'guest' : 'guests'}</option>
+          ))}
         </select>
       </div>
       <div className="booking-field">
-        <label htmlFor="bp-room">Accommodation</label>
-        <select id="bp-room" value={room} onChange={(e) => setRoom(e.target.value)}>
+        <label htmlFor="bp-room">Preferred stay</label>
+        <select id="bp-room" value={pick} onChange={(e) => setPick(e.target.value)}>
           <option value="any">Any type</option>
-          {ACCOMMODATIONS.map((a) => (<option key={a.slug} value={a.slug}>{a.name}</option>))}
+          <optgroup label="Rooms & villas">
+            {ACCOMMODATIONS.map((a) => (<option key={a.slug} value={`room:${a.slug}`}>{a.name}</option>))}
+          </optgroup>
+          <optgroup label="Cottages">
+            {COTTAGES.map((c) => (<option key={c.slug} value={`cottage:${c.slug}:night`}>{c.name}</option>))}
+          </optgroup>
         </select>
       </div>
       <div className="booking-field action">
-        <button className="btn btn-gold" type="submit">Check availability</button>
+        <button className="btn btn-gold" type="submit">Check Availability</button>
       </div>
       {error && <p className="field-error" role="alert" style={{ padding: '0.6rem 1.4rem' }}>{error}</p>}
     </form>

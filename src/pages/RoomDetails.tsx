@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ACCOMMODATIONS, formatUSD, getAccommodation } from '../data/resort';
+import { ACCOMMODATIONS, formatPHP, getAccommodation } from '../data/resort';
 import RoomCard from '../components/RoomCard';
 import { addDaysISO, priceBreakdown, todayISO, validateDates } from '../lib/booking';
 
@@ -38,7 +38,7 @@ export default function RoomDetails() {
         <div className="container">
           <p className="eyebrow" style={{ color: '#e9dfc9' }}>Stay · {room.view}</p>
           <h1>{room.name}</h1>
-          <p>{room.tagline} — from {formatUSD(room.rate)} per night. Sleeps {room.guests} · {room.beds}.</p>
+          <p>{room.tagline} — from {formatPHP(room.rate)} per night. Sleeps {room.guests} · {room.beds}.</p>
         </div>
       </section>
       <section className="section" style={{ paddingTop: '3rem' }}>
@@ -64,7 +64,7 @@ export default function RoomDetails() {
                   <tr><th scope="row">Sleeps</th><td>Up to {room.guests} guests · {room.beds}</td></tr>
                   <tr><th scope="row">Size &amp; outlook</th><td>{room.size} · {room.view}</td></tr>
                   <tr><th scope="row">Check-in / out</th><td>From 3:00 pm · Until 11:00 am · Early arrival on request</td></tr>
-                  <tr><th scope="row">Nightly rate</th><td>{formatUSD(room.rate)}, breakfast included</td></tr>
+                  <tr><th scope="row">Nightly rate</th><td>{formatPHP(room.rate)}, breakfast included</td></tr>
                 </tbody>
               </table>
               <h2>What&apos;s included</h2>
@@ -82,7 +82,7 @@ export default function RoomDetails() {
             </div>
             <aside className="book-card" aria-label="Booking estimate">
               <p className="eyebrow">Reserve</p>
-              <p className="rate">{formatUSD(room.rate)} <small>/ night</small></p>
+              <p className="rate">{formatPHP(room.rate)} <small>/ night</small></p>
               <div className="form-grid">
                 <div className="form-row">
                   <div>
@@ -104,10 +104,10 @@ export default function RoomDetails() {
                 {guestsExceeded && <p className="field-error" role="alert">This stay sleeps {room.guests}. Please choose a larger villa for {adults} adults.</p>}
                 {quote && !dateError && (
                   <div className="price-lines" aria-live="polite">
-                    <div><span>{formatUSD(room.rate)} × {quote.nights} night{quote.nights > 1 ? 's' : ''}</span><span>{formatUSD(quote.subtotal)}</span></div>
-                    <div><span>Service charge (12%)</span><span>{formatUSD(quote.service)}</span></div>
-                    <div><span>Cleaning fee</span><span>{formatUSD(quote.cleaning)}</span></div>
-                    <div className="price-total"><span>Estimated total</span><strong>{formatUSD(quote.total)}</strong></div>
+                    <div><span>{formatPHP(room.rate)} × {quote.nights} night{quote.nights > 1 ? 's' : ''}</span><span>{formatPHP(quote.subtotal)}</span></div>
+                    <div><span>Service charge (12%)</span><span>{formatPHP(quote.service)}</span></div>
+                    <div><span>Cleaning fee</span><span>{formatPHP(quote.cleaning)}</span></div>
+                    <div className="price-total"><span>Estimated total</span><strong>{formatPHP(quote.total)}</strong></div>
                   </div>
                 )}
                 <Link
@@ -117,8 +117,9 @@ export default function RoomDetails() {
                   onClick={(e) => { if (dateError || guestsExceeded) e.preventDefault(); }}
                   style={dateError || guestsExceeded ? { opacity: 0.55, pointerEvents: 'auto' } : undefined}
                 >
-                  Continue to booking
+                  Reserve Now
                 </Link>
+                <Link className="btn btn-outline-dark btn-sm" to="/rates">View all rates</Link>
                 <p style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>Availability is confirmed on request — our team will reply shortly.</p>
               </div>
             </aside>

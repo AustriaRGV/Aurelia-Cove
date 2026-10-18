@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ACCOMMODATIONS } from '../data/resort';
 import RoomCard from '../components/RoomCard';
 
@@ -62,8 +63,13 @@ export default function Stay() {
             </div>
           )}
           <p style={{ marginTop: '2rem', fontSize: '0.88rem', color: 'var(--muted)' }}>
-            Check-in 3:00 pm · Check-out 11:00 am. Rates are per night and exclude the itemized service charge shown at booking.
+            Check-in 3:00 pm · Check-out 11:00 am. Rates are per night in Philippine pesos and exclude the itemized service charge shown at booking.
+            Planning a day by the water instead? <Link to="/rates">Cottages and day tours</Link> are priced separately.
           </p>
+          <div style={{ marginTop: '1.6rem', display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+            <Link className="btn btn-primary btn-sm" to="/booking">Reserve Now</Link>
+            <Link className="btn btn-outline-dark btn-sm" to="/rates">View Rates</Link>
+          </div>
         </div>
       </section>
     </>

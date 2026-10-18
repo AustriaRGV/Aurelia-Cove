@@ -1,30 +1,12 @@
 import { Link } from 'react-router-dom';
-import { ACCOMMODATIONS, AMENITIES, CONTACT, EXPERIENCES, GALLERY, TESTIMONIALS, formatUSD } from '../data/resort';
+import { ACCOMMODATIONS, AMENITIES, CONTACT, COTTAGES, DIRECTIONS, EXPERIENCES, GALLERY, PACKAGES, TESTIMONIALS, formatPHP } from '../data/resort';
 import BookingSearchPanel from '../components/BookingSearchPanel';
 import RoomCard from '../components/RoomCard';
 import Newsletter from '../components/Newsletter';
 import AmenityIcon from '../components/AmenityIcon';
+import MessengerButton from '../components/MessengerButton';
 import Reveal from '../components/Reveal';
-
-function MapIllustration() {
-  return (
-    <svg viewBox="0 0 420 340" role="img" aria-label="Illustrated map of Solmere Bay">
-      <rect width="420" height="340" fill="#e3eceb" />
-      <path d="M40 250 C90 200 70 150 130 130 C180 115 200 150 250 140 C310 128 340 90 385 105 C400 200 330 290 220 300 C140 307 80 290 40 250Z" fill="#f4efe0" stroke="#1e3a2f" strokeWidth="1.5" />
-      <path d="M120 220 C160 200 200 210 230 190" fill="none" stroke="#2e5e63" strokeWidth="1.4" strokeDasharray="5 4" />
-      <circle cx="205" cy="198" r="5" fill="#1e3a2f" />
-      <text x="218" y="202" fontSize="12" fill="#1e3a2f" fontFamily="sans-serif">Aurelia Cove</text>
-      <text x="60" y="270" fontSize="11" fill="#2e5e63" fontFamily="sans-serif" letterSpacing="3">S O L M E R E&nbsp;&nbsp;B A Y</text>
-      <path d="M300 230 q6 -8 12 0 q6 8 12 0" fill="none" stroke="#2e5e63" strokeWidth="1.3" />
-      <path d="M90 120 q6 -8 12 0 q6 8 12 0" fill="none" stroke="#2e5e63" strokeWidth="1.3" />
-      <g fill="#1e3a2f" opacity="0.7">
-        <circle cx="150" cy="170" r="2.5" /><circle cx="165" cy="185" r="2.5" /><circle cx="140" cy="195" r="2.5" />
-      </g>
-      <text x="105" y="162" fontSize="10" fill="#1e3a2f" fontFamily="sans-serif">Palm Grove</text>
-      <text x="255" y="165" fontSize="10" fill="#1e3a2f" fontFamily="sans-serif">Turtle Reef</text>
-    </svg>
-  );
-}
+import MapIllustration from '../components/MapIllustration';
 
 export default function Home() {
   return (
@@ -44,14 +26,9 @@ export default function Home() {
             Twenty-eight villas and suites hidden between gardens and water — private pools,
             unhurried spa rituals and dinners at the edge of the tide.
           </p>
-          <div className="hero-actions">
-            <Link className="btn btn-gold" to="/stay">Explore our villas</Link>
-            <Link className="btn btn-outline" to="/booking">Book your stay</Link>
-          </div>
-          <div className="hero-meta">
-            <div><strong>28</strong><span>Villas &amp; suites</span></div>
-            <div><strong>400 m</strong><span>Private beach</span></div>
-            <div><strong>From {formatUSD(Math.min(...ACCOMMODATIONS.map((a) => a.rate)))}</strong><span>Per night</span></div>
+          <div className="hero-actions" style={{ marginBottom: '1.5rem' }}>
+            <Link className="btn btn-gold" to="/rates">View Rates</Link>
+            <Link className="btn btn-primary" to="/booking">Reserve Now</Link>
           </div>
         </div>
       </section>
@@ -72,6 +49,48 @@ export default function Home() {
           </Reveal>
           <div className="stay-grid">
             {ACCOMMODATIONS.map((r) => (<RoomCard key={r.slug} room={r} />))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }} aria-labelledby="cottage-h">
+        <div className="container">
+          <Reveal>
+            <div className="section-head-split">
+              <div>
+                <p className="eyebrow">Cottages &amp; day use</p>
+                <h2 className="section-title" id="cottage-h">A day by the water, no room required</h2>
+              </div>
+              <Link className="btn btn-outline-dark btn-sm" to="/rates">View Rates</Link>
+            </div>
+            <p className="section-lede">
+              Nipa-shaded cottages on the sand, beside the horizon pool and tucked into the gardens —
+              open to day guests as well as overnight stays. Every cottage includes pool and beach access.
+            </p>
+          </Reveal>
+          <div className="cottage-grid">
+            {COTTAGES.map((c) => (
+              <article className="cottage-card" key={c.slug}>
+                <div className="cottage-media">
+                  <img src={c.image.src} alt={c.image.alt} loading="lazy" />
+                  {c.badge && <span className="rate-badge on-media">{c.badge}</span>}
+                </div>
+                <div className="cottage-body">
+                  <h3>{c.name}</h3>
+                  <p className="cottage-tag">{c.tagline}</p>
+                  <p className="cottage-desc">{c.description}</p>
+                  <dl className="cottage-rates">
+                    <div><dt>Day use</dt><dd>{formatPHP(c.dayRate)}<small> / day</small></dd></div>
+                    <div><dt>Overnight</dt><dd>{formatPHP(c.overnightRate)}<small> / night</small></dd></div>
+                  </dl>
+                  <p className="cottage-hours">Seats up to {c.capacity} · {c.hours}</p>
+                  <div className="room-actions">
+                    <Link className="btn btn-outline-dark btn-sm" to="/rates">View Rates</Link>
+                    <Link className="btn btn-primary btn-sm" to={`/booking?trip=day&pick=cottage:${c.slug}:day`}>Reserve Now</Link>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -116,6 +135,51 @@ export default function Home() {
           </div>
           <div style={{ marginTop: '2rem' }}>
             <Link className="btn btn-gold btn-sm" to="/amenities">Explore all amenities</Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }} aria-labelledby="pkg-h">
+        <div className="container">
+          <Reveal>
+            <div className="section-head-split">
+              <div>
+                <p className="eyebrow">Packages</p>
+                <h2 className="section-title" id="pkg-h">Bundled stays, one simple price</h2>
+              </div>
+              <Link className="btn btn-outline-dark btn-sm" to="/rates">All packages</Link>
+            </div>
+            <p className="section-lede">
+              Accommodation, dining, spa and tours arranged together — for less than booking each part
+              on its own, and with one host looking after everything.
+            </p>
+          </Reveal>
+          <div className="package-grid">
+            {PACKAGES.map((p) => (
+              <article className="package-card" key={p.slug}>
+                <div className="package-media">
+                  <img src={p.image.src} alt={p.image.alt} loading="lazy" />
+                  {p.badge && <span className="rate-badge on-media">{p.badge}</span>}
+                </div>
+                <div className="package-body">
+                  <h3>{p.name}</h3>
+                  <p className="package-tag">{p.tagline}</p>
+                  <p>{p.description}</p>
+                  <ul className="amen-list">
+                    {p.includes.slice(0, 3).map((i) => (<li key={i}>{i}</li>))}
+                  </ul>
+                  <div className="package-foot">
+                    <p className="package-price"><strong>{formatPHP(p.price)}</strong><span>{p.priceNote}</span></p>
+                    <Link
+                      className="btn btn-primary btn-sm"
+                      to={`/booking?trip=${p.applies === 'day' ? 'day' : 'overnight'}&pick=package:${p.slug}`}
+                    >
+                      Reserve Now
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -185,7 +249,7 @@ export default function Home() {
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: '2.2rem' }}>
-            <Link className="btn btn-primary" to="/booking">Begin your booking request</Link>
+            <Link className="btn btn-primary" to="/booking">Reserve Now</Link>
           </div>
         </div>
       </section>
@@ -208,7 +272,25 @@ export default function Home() {
                 <li><strong>Reef:&nbsp;</strong> Turtle Reef, a sheltered marine garden with calm morning water.</li>
                 <li><strong>Climate:&nbsp;</strong> Warm and breezy year-round; brief afternoon showers in “green season”.</li>
               </ul>
-              <div><Link className="btn btn-outline-dark btn-sm" to="/contact">Plan your arrival</Link></div>
+              <div className="location-actions">
+                <a className="btn btn-outline-dark btn-sm" href={CONTACT.mapsUrl} target="_blank" rel="noopener noreferrer">Get directions</a>
+                <Link className="btn btn-quiet btn-sm" to="/contact">Plan your arrival</Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="directions" aria-labelledby="dir-h">
+            <h3 id="dir-h">Getting here</h3>
+            <div className="directions-grid">
+              {DIRECTIONS.map((d) => (
+                <div className="directions-item" key={d.title}>
+                  <AmenityIcon name={d.icon} />
+                  <div>
+                    <h4>{d.title}<span className="directions-meta">{d.meta}</span></h4>
+                    <p>{d.text}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           <div style={{ marginTop: '2.5rem' }}><Newsletter /></div>
@@ -224,8 +306,9 @@ export default function Home() {
               <p style={{ color: 'rgba(250,247,240,0.75)' }}>Contact: {CONTACT.phone} · {CONTACT.reservations}</p>
             </div>
             <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
-              <Link className="btn btn-gold" to="/booking">Book your stay</Link>
-              <Link className="btn btn-outline" to="/contact">Contact us</Link>
+              <Link className="btn btn-gold" to="/rates">View Rates</Link>
+              <Link className="btn btn-primary" to="/booking">Reserve Now</Link>
+              <MessengerButton variant="outline" />
             </div>
           </div>
         </div>

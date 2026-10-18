@@ -24,8 +24,9 @@ export default function Amenities() {
               </div>
             ))}
           </div>
-          <div style={{ marginTop: '2rem' }}>
-            <Link className="btn btn-gold btn-sm" to="/booking">Book your stay</Link>
+          <div style={{ marginTop: '2rem', display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+            <Link className="btn btn-gold btn-sm" to="/booking">Reserve Now</Link>
+            <Link className="btn btn-outline btn-sm" to="/rates">View Rates</Link>
           </div>
         </div>
       </section>

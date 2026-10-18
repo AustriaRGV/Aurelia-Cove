@@ -43,8 +43,9 @@ export default function Experiences() {
             </tbody>
           </table>
           <div style={{ marginTop: '2rem', display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
-            <Link className="btn btn-primary btn-sm" to="/booking">Book your stay</Link>
-            <Link className="btn btn-outline-dark btn-sm" to="/contact">Ask about experiences</Link>
+            <Link className="btn btn-primary btn-sm" to="/booking">Reserve Now</Link>
+            <Link className="btn btn-outline-dark btn-sm" to="/rates">View Rates</Link>
+            <Link className="btn btn-quiet btn-sm" to="/contact">Ask about experiences</Link>
           </div>
         </div>
       </section>

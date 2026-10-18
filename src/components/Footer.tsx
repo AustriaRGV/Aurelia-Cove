@@ -18,10 +18,11 @@ export default function Footer() {
             <h4>Explore</h4>
             <ul>
               <li><Link to="/">Home</Link></li>
-              <li><Link to="/stay">Stay</Link></li>
+              <li><Link to="/stay">Rooms &amp; villas</Link></li>
+              <li><Link to="/rates">Rates &amp; packages</Link></li>
               <li><Link to="/experiences">Experiences</Link></li>
               <li><Link to="/amenities">Amenities</Link></li>
-              <li><Link to="/booking">Book your stay</Link></li>
+              <li><Link to="/booking">Reserve Now</Link></li>
             </ul>
           </nav>
           <div>
@@ -29,6 +30,7 @@ export default function Footer() {
             <ul>
               <li>{CONTACT.phone}</li>
               <li><a href={`mailto:${CONTACT.reservations}`}>{CONTACT.reservations}</a></li>
+              <li><a href={CONTACT.messenger} target="_blank" rel="noopener noreferrer">Messenger</a></li>
               <li>{CONTACT.hours}</li>
               <li>Check-in 3:00 pm · Check-out 11:00 am</li>
             </ul>
@@ -37,6 +39,7 @@ export default function Footer() {
             <h4>Find us</h4>
             <ul>
               {CONTACT.addressLines.map((l) => (<li key={l}>{l}</li>))}
+              <li><a href={CONTACT.mapsUrl} target="_blank" rel="noopener noreferrer">Get directions</a></li>
               <li><Link to="/contact">Contact &amp; island guide</Link></li>
             </ul>
           </div>

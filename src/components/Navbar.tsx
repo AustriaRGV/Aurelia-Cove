@@ -36,14 +36,15 @@ export default function Navbar() {
           <ul className="nav-links" id="nav-links">
             <li><NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>Home</NavLink></li>
             <li><NavLink to="/stay" className={({ isActive }) => (isActive ? 'active' : '')}>Stay</NavLink></li>
+            <li><NavLink to="/rates" className={({ isActive }) => (isActive ? 'active' : '')}>Rates</NavLink></li>
             <li><NavLink to="/experiences" className={({ isActive }) => (isActive ? 'active' : '')}>Experiences</NavLink></li>
             <li><NavLink to="/amenities" className={({ isActive }) => (isActive ? 'active' : '')}>Amenities</NavLink></li>
             <li><NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>Contact</NavLink></li>
           </ul>
         </nav>
         <div className="nav-cta">
-          <Link className="btn btn-outline btn-sm" to="/stay">Explore villas</Link>
-          <Link className="btn btn-gold btn-sm" to="/booking">Book your stay</Link>
+          <Link className="btn btn-outline btn-sm" to="/rates">View Rates</Link>
+          <Link className="btn btn-gold btn-sm" to="/booking">Reserve Now</Link>
           <button className="menu-toggle" onClick={toggle} aria-label="Toggle menu" aria-controls="nav-links">Menu</button>
         </div>
       </div>
